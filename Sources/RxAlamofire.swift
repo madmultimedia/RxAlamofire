@@ -20,7 +20,7 @@ import RxSwift
 public let RxAlamofireUnknownError = NSError(domain: "RxAlamofireDomain", code: -1, userInfo: nil)
 
 /// Custom error with response
-enum CustomRxAlamofireError: Error {
+public enum CustomRxAlamofireError: Error {
     case error(response: RxAlamofireResponse)  
 }
 
@@ -380,7 +380,7 @@ extension Reactive where Base: SessionManager {
                 request = try createRequest(self.base)
                 observer.on(.next(request))
                 request.responseWith(completionHandler: { (response) in
-                    if let error = response.error {
+                    if let _ = response.error {
                         observer.onError(CustomRxAlamofireError.error(response: response))
                     } else {
                         observer.on(.completed)
