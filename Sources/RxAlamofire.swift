@@ -19,11 +19,6 @@ import RxSwift
 /// Default instance of unknown error
 public let RxAlamofireUnknownError = NSError(domain: "RxAlamofireDomain", code: -1, userInfo: nil)
 
-/// Custom error with response
-public enum CustomRxAlamofireError: Error {
-    case error(response: RxAlamofireResponse)  
-}
-
 // MARK: Convenience functions
 
 /**
@@ -337,8 +332,13 @@ protocol RxAlamofireRequest {
     func cancel()
 }
 
-protocol RxAlamofireResponse {
+public protocol RxAlamofireResponse {
     var error: Error? {get}
+}
+
+/// Custom error with response
+public enum CustomRxAlamofireError: Error {
+    case error(response: RxAlamofireResponse)  
 }
 
 extension DefaultDataResponse: RxAlamofireResponse {}
