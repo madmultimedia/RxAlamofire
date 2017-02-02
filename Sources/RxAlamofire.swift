@@ -19,6 +19,11 @@ import RxSwift
 /// Default instance of unknown error
 public let RxAlamofireUnknownError = NSError(domain: "RxAlamofireDomain", code: -1, userInfo: nil)
 
+/// Custom error with response
+enum CustomRxAlamofireError: Error {
+    case error(response: RxAlamofireResponse)  
+}
+
 // MARK: Convenience functions
 
 /**
@@ -376,7 +381,7 @@ extension Reactive where Base: SessionManager {
                 observer.on(.next(request))
                 request.responseWith(completionHandler: { (response) in
                     if let error = response.error {
-                        observer.onError(error)
+                        observer.onError(CustomRxAlamofireError.error(response: response))
                     } else {
                         observer.on(.completed)
                     }
